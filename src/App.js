@@ -4,8 +4,8 @@ import Navbar from './components/Navbar';
 import Textform from './components/Textform';
 import { useState } from 'react';
 import Alert from './components/Alert';
-import About from './components/About';
 import { Routes,Route } from 'react-router';
+import About from './components/About';
 
 function App() {
   const[mode, setMode] = useState('light');
@@ -19,7 +19,17 @@ function App() {
         setAlert(null);
       }, 3000);
   }
-  const toggleMode = ()=>{
+  const removeBodyClasses = ()=> {
+    document.body.classList.remove('bg-light')
+    document.body.classList.remove('bg-danger')
+    document.body.classList.remove('bg-dark')
+    document.body.classList.remove('bg-success')
+    document.body.classList.remove('bg-warning')
+  }
+  const toggleMode = (cls)=>{
+    removeBodyClasses();
+    console.log(cls)
+    document.body.classList.add('bg-'+cls)
     if(mode === 'light'){
       setMode('dark');
       document.body.style.backgroundColor = 'rgb(3 24 41)';
@@ -40,7 +50,7 @@ function App() {
       <div className="container my-3">
        
     <Routes> 
-          <Route exact path="/about" element={<About/>}/>  
+          <Route exact path="/about" element={<About mode={mode}/>}/>  
           <Route exact path="/"
             element={<Textform heading="Enter the text to analyse below" showAlert={showAlert} mode={mode}/>}>
           </Route>
